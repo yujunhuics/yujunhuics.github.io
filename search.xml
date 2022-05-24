@@ -241,6 +241,31 @@
     
     
     <entry>
+      <title>python易忘知识点</title>
+      <link href="/2018/12/27/development/python/"/>
+      <url>/2018/12/27/development/python/</url>
+      
+        <content type="html"><![CDATA[<h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1><p>​        python垃圾回收实际上是一个引用计数器和一个循环垃圾收集器组成，当一个对象的引用计数器变为0，解释器暂停，释放这个对象和仅有这个对象可访问的其他对象。作为引用计数的补充，垃圾收集器也会留心被分配的总量很大的（及未通过引用计数器销毁的那些）对象。这种情况时，计时器暂停，试图清理所有未引用的循环。</p><h1 id="XRange对象"><a href="#XRange对象" class="headerlink" title="XRange对象"></a>XRange对象</h1><p>​       内建函数xrange()是内建函数range()的兄弟版本，用于节省内存使用或range()无法完成的超大数据集场合。调用时产生Xrange对象。</p><h1 id="cmp-函数"><a href="#cmp-函数" class="headerlink" title="cmp()函数"></a>cmp()函数</h1><p>cmp()函数功能:</p><p>用于比较2个对象</p><p>当x &lt; y 返回 -1,</p><p>当x &#x3D;&#x3D; y 返回 0</p><p>当 x &gt; y 返回 1</p><p>python3.x已经没有这个函数</p><h1 id="如何删除数字对象"><a href="#如何删除数字对象" class="headerlink" title="如何删除数字对象"></a>如何删除数字对象</h1><p>python无法真正的删除一个数值对象，仅仅是不再使用而已，删除一个数值对象的引用，使用del语句。</p><h1 id="python复数"><a href="#python复数" class="headerlink" title="python复数"></a>python复数</h1><p>python复数由实部（real）和虚部（imag）构成，在 Python 中，复数的虚部以<code>j</code>或者<code>J</code>作为后缀，具体格式为：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 形式：a + bj</span></span><br><span class="line">a = -<span class="number">9.223</span> - <span class="number">1.34j</span></span><br><span class="line"><span class="built_in">print</span>(a.real)</span><br><span class="line"><span class="built_in">print</span>(a.imag)</span><br></pre></td></tr></table></figure><p>注：实部和虚部都是浮点型。</p><h1 id="divmode-函数"><a href="#divmode-函数" class="headerlink" title="divmode()函数"></a>divmode()函数</h1><p>把除法和取余运算结合起来，返回一个包含商和余数的元组。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">divmod</span>(<span class="number">10</span>,<span class="number">3</span>))</span><br><span class="line"><span class="comment"># (3, 1)</span></span><br></pre></td></tr></table></figure><h1 id="ASCII转换函数"><a href="#ASCII转换函数" class="headerlink" title="ASCII转换函数"></a>ASCII转换函数</h1><p>ord()函数和chr()</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="comment"># 97</span></span><br><span class="line"><span class="built_in">chr</span>(<span class="number">97</span>)</span><br><span class="line"><span class="comment"># a</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker核心技术</title>
       <link href="/2018/09/21/docker/docker/"/>
       <url>/2018/09/21/docker/docker/</url>
