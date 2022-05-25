@@ -83,6 +83,31 @@
     
     
     <entry>
+      <title>softmax函数的上溢和下溢问题</title>
+      <link href="/2021/09/23/deeplearning/softmax/"/>
+      <url>/2021/09/23/deeplearning/softmax/</url>
+      
+        <content type="html"><![CDATA[<h1 id="数值计算"><a href="#数值计算" class="headerlink" title="数值计算"></a>数值计算</h1><p><strong>上溢和下溢</strong><br>        计算机通过有限数量的位模式来表示无限多的实数，总会引入一些近似误差。如果涉及时没有考虑最小化舍入误差的累积，在实践时可能会导致算法实效。</p><p><strong>下溢</strong>：当接近零的数被<strong>四舍五入为零</strong>时发生下溢。</p><p>许多函数在其参数为零而不是一个很小的正数时会表现出质的不同：</p><ul><li>避免零除</li><li>避免取0的对数</li></ul><p><strong>上溢</strong>：大量级的数被<strong>近似为无穷</strong>时发生上溢。</p><h1 id="softmax函数"><a href="#softmax函数" class="headerlink" title="softmax函数"></a>softmax函数</h1><p>必须对上溢和下溢进行数值稳定的一个<strong>例子</strong>是<strong>softmax函数</strong></p><p><img src="https://fastly.jsdelivr.net/gh/yujunhuics/image-bed/img/image-20220525162221048.png" alt="image-20220525162221048"></p><p>问题：假设所有的$x_i$都等于某个常数$c$，理论上对所有$x_i$上式结果为$1&#x2F;n$。</p><p>如果 $c $是<strong>很小的负数</strong>，$exp(c)$就会下溢，softmax分母会变成0，最后的结果将为NaN<br>如果 $c$ 量级很大，$exp(c)$上溢，导致最后的结果将为NaN<br>方法:</p><p>只需令：$c &#x3D; \max {z_j}$,将<strong>softmax所有输入减去输入中的最大值</strong>即可保证数值稳定。</p><ul><li><p>减去最大值导致exp最大为0，排除了上溢的可能性</p></li><li><p>同样，分母中至少有一个值为1的项（exp(0)&#x3D;1），从而也排除了因分母&#x3D;下溢导致被零除的可能性</p><p>还需注意分子可能发生下溢，会导致计算 log softmax(x)时得到负无穷。</p><p>  <strong>实现深度学习算法时，开发者应牢记数值问题。</strong></p></li></ul><h1 id="pytorch中的softmax函数"><a href="#pytorch中的softmax函数" class="headerlink" title="pytorch中的softmax函数"></a>pytorch中的softmax函数</h1><p>如果你是用主流深度学习框架做的话，<strong>那这实际上是个伪问题</strong>，因为PyTorch等框架中的softmax函数都会<strong>自动处理好这个问题（自动减去最大输入）</strong>。以PyTorch为例，它的softmax实现如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T, typename AccumT, typename OutT&gt;</span><br><span class="line">struct SoftMaxForwardEpilogue &#123;</span><br><span class="line">  __device__ __forceinline__ SoftMaxForwardEpilogue(AccumT max_input, AccumT <span class="built_in">sum</span>)</span><br><span class="line">    : max_input(max_input)</span><br><span class="line">    , <span class="built_in">sum</span>(<span class="built_in">sum</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  __device__ __forceinline__ OutT operator()(T <span class="built_in">input</span>) const &#123;</span><br><span class="line">    <span class="keyword">return</span> static_cast&lt;OutT&gt;(std::exp(<span class="built_in">input</span> - max_input) / <span class="built_in">sum</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const AccumT max_input;</span><br><span class="line">  const AccumT <span class="built_in">sum</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 深度学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 深度学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>列表json对象去重</title>
       <link href="/2021/03/21/development/remove_duplicate_json/"/>
       <url>/2021/03/21/development/remove_duplicate_json/</url>
@@ -284,11 +309,11 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> pandas </tag>
             
             <tag> sql </tag>
+            
+            <tag> python </tag>
             
         </tags>
       
